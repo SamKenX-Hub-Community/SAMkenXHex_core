@@ -1,0 +1,39 @@
+name: Erlang CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: erlang:22.0.7
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile
+      run: rebar3 compile
+    - name: Run tests
+      run: rebar3 do eunit, ct
+    - name: Download a Build Artifact
+
+  uses: actions/download-artifact@v2.1.1
+
+  with:
+
+    # Artifact name
+
+    name: # optional
+
+    # Destination path
+
+    path: # optional
